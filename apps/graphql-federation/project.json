@@ -1,0 +1,64 @@
+{
+  "name": "graphql-federation",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/graphql-federation/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/graphql-federation",
+        "main": "apps/graphql-federation/src/main.ts",
+        "tsConfig": "apps/graphql-federation/tsconfig.app.json",
+        "assets": ["apps/graphql-federation/src/assets"],
+        "isolatedConfig": true,
+        "webpackConfig": "apps/graphql-federation/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "graphql-federation:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "graphql-federation:build:development"
+        },
+        "production": {
+          "buildTarget": "graphql-federation:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/graphql-federation/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/graphql-federation/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": []
+}
