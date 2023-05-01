@@ -1,0 +1,64 @@
+{
+  "name": "employee-gql-service",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/employee-gql-service/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/employee-gql-service",
+        "main": "apps/employee-gql-service/src/main.ts",
+        "tsConfig": "apps/employee-gql-service/tsconfig.app.json",
+        "assets": ["apps/employee-gql-service/src/assets"],
+        "isolatedConfig": true,
+        "webpackConfig": "apps/employee-gql-service/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "employee-gql-service:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "employee-gql-service:build:development"
+        },
+        "production": {
+          "buildTarget": "employee-gql-service:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/employee-gql-service/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/employee-gql-service/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": []
+}

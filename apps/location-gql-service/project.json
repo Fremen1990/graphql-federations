@@ -1,0 +1,64 @@
+{
+  "name": "location-gql-service",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/location-gql-service/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/location-gql-service",
+        "main": "apps/location-gql-service/src/main.ts",
+        "tsConfig": "apps/location-gql-service/tsconfig.app.json",
+        "assets": ["apps/location-gql-service/src/assets"],
+        "isolatedConfig": true,
+        "webpackConfig": "apps/location-gql-service/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "location-gql-service:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "location-gql-service:build:development"
+        },
+        "production": {
+          "buildTarget": "location-gql-service:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/location-gql-service/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/location-gql-service/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": []
+}
