@@ -1,42 +1,36 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { LocationService } from './location.service';
 import { Location } from './entities/location.entity';
 import { CreateLocationInput } from './dto/create-location.input';
 import { UpdateLocationInput } from './dto/update-location.input';
-
-@Resolver(() => Location)
+@Resolver((of) => Location)
 export class LocationResolver {
-  constructor(private readonly locationService: LocationService) {}
+
+  constructor(private readonly locationService: LocationService) { }
 
   @Mutation(() => Location)
-  createLocation(
-    @Args('createLocationInput') createLocationInput: CreateLocationInput
-  ) {
-    return this.locationService.create(createLocationInput);
+  createLocation(@Args('createLocationInput') location: CreateLocationInput) {
+    return this.locationService.create(location);
   }
 
-  @Query(() => [Location], { name: 'location' })
+  @Query(() => [Location], { name: 'getAllLocations' })
   findAll() {
     return this.locationService.findAll();
   }
 
   @Query(() => Location, { name: 'location' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(@Args('id') id: string) {
     return this.locationService.findOne(id);
   }
 
   @Mutation(() => Location)
-  updateLocation(
-    @Args('updateLocationInput') updateLocationInput: UpdateLocationInput
-  ) {
-    return this.locationService.update(
-      updateLocationInput.id,
-      updateLocationInput
-    );
+  updateLocation(@Args('updateLocationInput') location: UpdateLocationInput) {
+    return this.locationService.update(location.id, location);
   }
 
   @Mutation(() => Location)
-  removeLocation(@Args('id', { type: () => Int }) id: number) {
+  removeLocation(@Args('id') id: string) {
     return this.locationService.remove(id);
   }
 }

@@ -1,8 +1,8 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { EmployeeService } from './employee.service';
 import { Employee } from './entities/employee.entity';
-import { CreateEmployeeInput } from './dto/create-employee.input';
 import { UpdateEmployeeInput } from './dto/update-employee.input';
+import {EmployeeCreateDTO} from "./dto/create-employee.input";
 
 @Resolver(() => Employee)
 export class EmployeeResolver {
@@ -10,18 +10,18 @@ export class EmployeeResolver {
 
   @Mutation(() => Employee)
   createEmployee(
-    @Args('createEmployeeInput') createEmployeeInput: CreateEmployeeInput
+    @Args('createEmployeeInput') createEmployeeInput: EmployeeCreateDTO
   ) {
     return this.employeeService.create(createEmployeeInput);
   }
 
-  @Query(() => [Employee], { name: 'employee' })
+  @Query(() => [Employee], { name: 'getAllEmployees' })
   findAll() {
     return this.employeeService.findAll();
   }
 
   @Query(() => Employee, { name: 'employee' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(@Args('id') id: string) {
     return this.employeeService.findOne(id);
   }
 
@@ -36,7 +36,7 @@ export class EmployeeResolver {
   }
 
   @Mutation(() => Employee)
-  removeEmployee(@Args('id', { type: () => Int }) id: number) {
+  removeEmployee(@Args('id', ) id: string) {
     return this.employeeService.remove(id);
   }
 }
