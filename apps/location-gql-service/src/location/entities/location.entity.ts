@@ -16,8 +16,8 @@ export class Location {
   @Column()
   code: number
 
-  /*  @OneToMany(() => Employee, employee => employee.project)
-   @Field(() => [Employee], { nullable: true })
-   employees: Employee[] */
+  // /*  @OneToMany(() => Employee, employee => employee.project)
+  //  @Field(() => [Employee], { nullable: true })
+  //  employees: Employee[]
 
 }

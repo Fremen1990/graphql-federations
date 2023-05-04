@@ -7,6 +7,11 @@ type Project {
   employees: [Employee!]!
 }
 
+type Location {
+  id: ID!
+  employees: [Employee!]!
+}
+
 type Employee {
   id: ID!
   firstName: String!
@@ -14,7 +19,9 @@ type Employee {
   designation: String!
   city: String
   project: Project!
+  location: Location!
   projectId: String!
+  locationId: String!
 }
 
 type Query {
@@ -34,6 +41,7 @@ input EmployeeCreateDTO {
   designation: String!
   city: String
   projectId: String!
+  locationId: String!
 }
 
 input UpdateEmployeeInput {
@@ -42,5 +50,6 @@ input UpdateEmployeeInput {
   designation: String
   city: String
   projectId: String
+  locationId: String
   id: String!
 }

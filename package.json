@@ -3,8 +3,12 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "run-employee-service": "npx nx serve employee-gql-service",
+    "run-project-service": "npx nx serve project-gql-service",
+    "run-location-service": "npx nx serve location-gql-service",
+    "run-gateway-federation": "npx nx serve graphql-federation"
+    "run-all-by-name": "npx nx run-many --targets=serve --projects=employee-gql-service,location-gql-service,project-gql-service,graphql-federation --parallel=4",
     "run-all": "npx nx run-many --targets=serve --projects=* --exclude *-e2e --parallel=4",
-    "run-all-by-name": "npx nx run-many --targets=serve --projects=employee-gql-service,location-gql-service,project-gql-service,graphql-federation --parallel=4"
   },
   "private": true,
   "dependencies": {

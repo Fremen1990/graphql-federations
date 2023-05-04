@@ -4,6 +4,7 @@ import { Employee } from './entities/employee.entity';
 import { UpdateEmployeeInput } from './dto/update-employee.input';
 import {EmployeeCreateDTO} from "./dto/create-employee.input";
 import {Project} from "./entities/project.entity";
+import {Location} from "./entities/location.entity";
 
 @Resolver(() => Employee)
 export class EmployeeResolver {
@@ -41,12 +42,14 @@ export class EmployeeResolver {
     return this.employeeService.remove(id);
   }
 
-
-
   @ResolveField((of) => Project)
   project(@Parent() employee: Employee) {
     return { __typename: 'Project', id: employee.projectId };
   }
 
-
+  @ResolveField((of) => Location)
+  location(@Parent() employee: Employee) {
+    console.log('returning location type')
+    return { __typename: 'Location', id: employee.locationId };
+  }
 }

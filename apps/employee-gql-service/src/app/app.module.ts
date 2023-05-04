@@ -6,19 +6,19 @@ import {EmployeeModule} from "../employee/employee.module";
 import {join} from "path";
 import process from "process";
 import {GraphQLModule} from "@nestjs/graphql";
-import {ApolloDriver, ApolloDriverConfig, ApolloFederationDriver, ApolloFederationDriverConfig} from "@nestjs/apollo";
+import {ApolloFederationDriver, ApolloFederationDriverConfig} from "@nestjs/apollo";
 import {TypeOrmModule} from "@nestjs/typeorm";
+
 import {Project} from "../employee/entities/project.entity";
+import {Location} from "../employee/entities/location.entity";
 
 @Module({
   imports: [EmployeeModule,
     GraphQLModule.forRoot<ApolloFederationDriverConfig>({
       driver: ApolloFederationDriver,
-      // autoSchemaFile: join(process.cwd(), 'apps/employee-gql-service/src/graphsql-schema.gql'),
-      // autoSchemaFile: { path: 'apps/employee-gql-service/src/graphsql-schema.gql', federation: 2 },
       autoSchemaFile: {path: join(process.cwd(), 'apps/employee-gql-service/src/graphsql-schema.gql'), federation: 2},
       buildSchemaOptions: {
-        orphanedTypes: [Project]
+        orphanedTypes: [Project, Location]
       }
     }),
     TypeOrmModule.forRoot({
@@ -29,7 +29,7 @@ import {Project} from "../employee/entities/project.entity";
       password: 'AiFuture2023!',
       database: 'federation_db-employee',
       autoLoadEntities: true,
-      synchronize: true,
+      synchronize: false,
       // logging: true,
     }),],
   controllers: [AppController],

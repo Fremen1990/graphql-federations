@@ -39,4 +39,9 @@ export class EmployeeService {
     // return await this.employeeRepository.find({"projectId": id})
     return await this.employeeRepository.find({where:{projectId:id}});
   }
+
+  async forLocation(id:string){
+    // return await this.employeeRepository.find({"projectId": id})
+    return await this.employeeRepository.find({where:{locationId:id}});
+  }
 }
