@@ -34,4 +34,9 @@ export class EmployeeService {
   remove(id: string) {
     return `This action removes a #${id} employee`;
   }
+
+  async forProject(id:string){
+    // return await this.employeeRepository.find({"projectId": id})
+    return await this.employeeRepository.find({where:{projectId:id}});
+  }
 }

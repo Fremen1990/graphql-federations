@@ -2,30 +2,45 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Location {
+type Project {
   id: ID!
-  name: String!
-  code: Int!
+  employees: [Employee!]!
+}
+
+type Employee {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  designation: String!
+  city: String
+  project: Project!
+  projectId: String!
 }
 
 type Query {
-  getAllLocations: [Location!]!
-  location(id: String!): Location!
+  getAllEmployees: [Employee!]!
+  employee(id: String!): Employee!
 }
 
 type Mutation {
-  createLocation(createLocationInput: CreateLocationInput!): Location!
-  updateLocation(updateLocationInput: UpdateLocationInput!): Location!
-  removeLocation(id: String!): Location!
+  createEmployee(createEmployeeInput: EmployeeCreateDTO!): Employee!
+  updateEmployee(updateEmployeeInput: UpdateEmployeeInput!): Employee!
+  removeEmployee(id: String!): Employee!
 }
 
-input CreateLocationInput {
-  name: String!
-  code: Int!
+input EmployeeCreateDTO {
+  firstName: String!
+  lastName: String!
+  designation: String!
+  city: String
+  projectId: String!
 }
 
-input UpdateLocationInput {
+input UpdateEmployeeInput {
+  firstName: String
+  lastName: String
+  designation: String
+  city: String
+  projectId: String
   id: String!
-  name: String!
-  code: Int!
 }

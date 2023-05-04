@@ -5,16 +5,18 @@ import { AppService } from './app.service';
 import {join} from "path";
 import process from "process";
 import {GraphQLModule} from "@nestjs/graphql";
-import {ApolloDriver, ApolloDriverConfig} from "@nestjs/apollo";
+import {ApolloDriver, ApolloDriverConfig, ApolloFederationDriver, ApolloFederationDriverConfig} from "@nestjs/apollo";
 import {TypeOrmModule} from "@nestjs/typeorm";
 import {LocationModule} from "../location/location.module";
 
 
 @Module({
   imports: [LocationModule,
-    GraphQLModule.forRoot<ApolloDriverConfig>({
-      driver: ApolloDriver,
-      autoSchemaFile: join(process.cwd(), 'apps/graphsql-schema.gql'),
+    GraphQLModule.forRoot<ApolloFederationDriverConfig>({
+      driver: ApolloFederationDriver,
+      // autoSchemaFile: join(process.cwd(), 'apps/location-gql-service/src/graphsql-schema.gql'),
+      autoSchemaFile: { path: 'apps/location-gql-service/src/graphsql-schema.gql', federation: 2 },
+
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',

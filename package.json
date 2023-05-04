@@ -3,11 +3,15 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "run-all": "npx nx run-many --targets=serve --projects=* --exclude *-e2e --parallel"
+    "run-all": "npx nx run-many --targets=serve --projects=* --exclude *-e2e --parallel=4",
+    "run-all-by-name": "npx nx run-many --targets=serve --projects=employee-gql-service,location-gql-service,project-gql-service,graphql-federation --parallel=4"
   },
   "private": true,
   "dependencies": {
+    "@apollo/federation": "^0.38.1",
+    "@apollo/gateway": "^2.4.2",
     "@apollo/server": "^4.6.0",
+    "@apollo/subgraph": "^2.4.2",
     "@nestjs/apollo": "^11.0.5",
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",

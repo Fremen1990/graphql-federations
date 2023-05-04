@@ -1,8 +1,9 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import {Resolver, Query, Mutation, Args, ResolveField, Parent} from '@nestjs/graphql';
 import { EmployeeService } from './employee.service';
 import { Employee } from './entities/employee.entity';
 import { UpdateEmployeeInput } from './dto/update-employee.input';
 import {EmployeeCreateDTO} from "./dto/create-employee.input";
+import {Project} from "./entities/project.entity";
 
 @Resolver(() => Employee)
 export class EmployeeResolver {
@@ -39,4 +40,13 @@ export class EmployeeResolver {
   removeEmployee(@Args('id', ) id: string) {
     return this.employeeService.remove(id);
   }
+
+
+
+  @ResolveField((of) => Project)
+  project(@Parent() employee: Employee) {
+    return { __typename: 'Project', id: employee.projectId };
+  }
+
+
 }
